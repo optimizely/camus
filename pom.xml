@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<prerequisites>
-		<maven>3.0.0</maven>
+		<maven>3.2.3</maven>
 	</prerequisites>
 
 	<groupId>com.linkedin.camus</groupId>
@@ -13,8 +13,8 @@
 	<packaging>pom</packaging>
 	<name>Camus Parent</name>
 	<description>
-    Camus is LinkedIn's Kafka->HDFS pipeline. It is a mapreduce job that does distributed data loads out of Kafka.
-  </description>
+          Camus is LinkedIn's Kafka->HDFS pipeline. It is a mapreduce job that does distributed data loads out of Kafka.
+        </description>
 	<url>https://github.com/linkedin/camus</url>
 
 	<properties>
@@ -58,18 +58,21 @@
 			<dependency>
 				<groupId>org.apache.avro</groupId>
 				<artifactId>avro</artifactId>
-				<version>1.7.7</version>
+				<version>1.7.6-cdh5.2.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.avro</groupId>
 				<artifactId>avro-mapred</artifactId>
-				<version>1.7.7</version>
+                                <classifier>hadoop2</classifier>
+                                <version>1.7.6-cdh5.2.0</version>
 			</dependency>
-			<dependency>
-				<groupId>org.apache.avro</groupId>
-				<version>1.7.4-SNAPSHOT</version>
-				<artifactId>avro-repo-bundle</artifactId>
-			</dependency>
+
+                        <dependency>
+                          <groupId>org.schemarepo</groupId>
+                          <artifactId>schema-repo-bundle</artifactId>
+                          <version>0.1.2-SNAPSHOT</version>
+                        </dependency>
+
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
@@ -78,19 +81,34 @@
 			<dependency>
 				<groupId>org.apache.hadoop</groupId>
 				<artifactId>hadoop-client</artifactId>
-				<version>1.0.3</version>
+				<version>2.5.0-cdh5.2.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.sun.jersey</groupId>
+          <artifactId>jersey-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-beanutils</groupId>
+          <artifactId>commons-beanutils</artifactId>
+        </exclusion>
+      </exclusions>
+
 			</dependency>
 			<dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka_2.10</artifactId>
-                <version>0.8.0</version>
-                <exclusions>
-                  <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-simple</artifactId>
-                  </exclusion>
-                </exclusions>
-            </dependency>
+                                <groupId>org.apache.kafka</groupId>
+                                <artifactId>kafka_2.10</artifactId>
+                                <version>0.8.0</version>
+                                <exclusions>
+                                  <exclusion>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-simple</artifactId>
+                                  </exclusion>
+                                </exclusions>
+                        </dependency>
 			<dependency>
 				<groupId>com.github.sgroschupf</groupId>
 				<artifactId>zkclient</artifactId>
@@ -99,7 +117,13 @@
 			<dependency>
 				<groupId>org.apache.zookeeper</groupId>
 				<artifactId>zookeeper</artifactId>
-				<version>3.3.4</version>
+				<version>3.4.5-cdh5.2.0</version>
+                              <exclusions>
+                                <exclusion>
+                                  <groupId>org.jboss.netty</groupId>
+                                  <artifactId>netty</artifactId>
+                                </exclusion>
+                              </exclusions>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
@@ -148,9 +172,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git://github.com/linkedin/camus.git</connection>
-		<developerConnection>scm:git:git@github.com:linkedin/camus.git</developerConnection>
-		<url>http://github.com/linkedin/camus/</url>
+		<connection>scm:git:git://github.com/optimizely/camus.git</connection>
+		<developerConnection>scm:git:git@github.com:optimizely/camus.git</developerConnection>
+		<url>http://github.com/optimizely/camus/</url>
 	</scm>
 
 	<issueManagement>
@@ -159,6 +183,11 @@
 	</issueManagement>
 
 	<repositories>
+    <repository>
+      <id>cloudera</id>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+    </repository>
+
 		<repository>
 			<id>apache-releases</id>
 			<url>https://repository.apache.org/content/groups/public</url>
@@ -176,28 +205,6 @@
 						<goals>
 							<goal>test-jar</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-install-plugin</artifactId>
-				<version>2.3.1</version>
-				<inherited>false</inherited>
-				<executions>
-					<execution>
-						<id>install-avro-repo-client</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>install-file</goal>
-						</goals>
-						<configuration>
-							<groupId>org.apache.avro</groupId>
-							<artifactId>avro-repo-bundle</artifactId>
-							<version>1.7.4-SNAPSHOT</version>
-							<packaging>jar</packaging>
-							<file>${basedir}/lib/avro-repo-bundle-1.7.4-SNAPSHOT-withdeps.jar</file>
-							<pomFile>${basedir}/lib/avro-repo-bundle-1.7.4-SNAPSHOT-withdeps.xml</pomFile>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>

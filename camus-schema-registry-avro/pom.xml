@@ -29,10 +29,12 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
     </dependency>
+
     <dependency>
-      <groupId>org.apache.avro</groupId>
-      <artifactId>avro-repo-bundle</artifactId>
+      <groupId>org.schemarepo</groupId>
+      <artifactId>schema-repo-bundle</artifactId>
     </dependency>
+    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

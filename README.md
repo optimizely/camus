@@ -1,3 +1,12 @@
+# Prologue
+
+Fork of the Camus repo to make some changes to play nice in the optimizely environment:
+
+* Change Hadoop dependencies to CDH 5.2.0 versions
+* Remove baked-in copy of avro-schema-repo and replace it with a dependency on the development version of [schema-repo](https://github.com/schema-repo/schema-repo)
+* Code changes to support new version of schema-repo
+* Various build file exclusions to get things to play nice with CDH
+
 # Intro
 Camus is LinkedIn's [Kafka](http://kafka.apache.org "Kafka")->HDFS pipeline. It is a mapreduce job that does distributed data loads out of Kafka. It includes the following features:
 
